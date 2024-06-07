@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definicja struktury węzła drzewa binarnego
+struct node {
+    int data;
+    struct node *left;
+    struct node *right;
+};
+
+// Globalny wskaźnik na korzeń drzewa
+struct node *root = NULL;
+
+// Funkcja wyszukująca w drzewie zadaną wartość
+struct node* search(int value) {
+    struct node *q = root;
+
+    while (q != NULL) {
+        if (q->data == value) {
+            return q;  // Zwracamy wskaźnik na znaleziony węzeł
+        } else if (value < q->data) {
+            q = q->left;  // Przesuwamy wskaźnik w lewo
+        } else {
+            q = q->right;  // Przesuwamy wskaźnik w prawo
+        }
+    }
+
+    return NULL;  // Nie znaleziono wartości
+}
+
+int main() {
+    // Przykładowe drzewo BST do testowania
+    root = malloc(sizeof(struct node));
+    root->data = 9;
+    root->left = malloc(sizeof(struct node));
+    root->left->data = 6;
+    root->right = malloc(sizeof(struct node));
+    root->right->data = 11;
+    root->left->left = malloc(sizeof(struct node));
+    root->left->left->data = 4;
+    root->left->right = malloc(sizeof(struct node));
+    root->left->right->data = 7;
+    root->left->left->left = malloc(sizeof(struct node));
+    root->left->left->left->data = 2;
+    root->right->left = malloc(sizeof(struct node));
+    root->right->left->data = 10;
+    root->right->right = malloc(sizeof(struct node));
+    root->right->right->data = 15;
+    root->right->right->left = malloc(sizeof(struct node));
+    root->right->right->left->data = 12;
+    root->right->right->right = malloc(sizeof(struct node));
+    root->right->right->right->data = 25;
+
+    // Wyszukiwanie wartości w drzewie
+    int value_to_search = 7;
+    struct node *result = search(value_to_search);
+
+    if (result != NULL) {
+        printf("Found value %d in the tree.\n", value_to_search);
+    } else {
+        printf("Value %d not found in the tree.\n", value_to_search);
+    }
+
+    return 0;
+}
